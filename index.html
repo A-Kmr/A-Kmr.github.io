@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anirudh Kumar Pentapati | Analytics & AI Strategist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e2e8f0;
+            background-image: radial-gradient(#1a202c 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .section-title {
+            color: #f8fafc;
+        }
+        .card {
+            background-color: rgba(23, 23, 23, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+        }
+        .modal-container {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            background-color: #171717;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .stat-card, .skill-card {
+            background-color: rgba(23, 23, 23, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        .glow-text {
+            text-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .timeline-item-content {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="sticky top-0 z-50 bg-black/30 backdrop-blur-lg border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-slate-100">Anirudh Kumar Pentapati</div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="text-slate-300 hover:text-white transition relative nav-link">About</a>
+                <a href="#skills" class="text-slate-300 hover:text-white transition relative nav-link">Skills</a>
+                <a href="#projects" class="text-slate-300 hover:text-white transition relative nav-link">Projects</a>
+                <a href="#experience" class="text-slate-300 hover:text-white transition relative nav-link">Experience</a>
+                <a href="#contact" class="text-slate-300 hover:text-white transition relative nav-link">Contact</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-slate-100 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900/80 backdrop-blur-lg">
+            <a href="#about" class="block py-2 px-4 text-sm text-slate-300 hover:bg-gray-800">About</a>
+            <a href="#skills" class="block py-2 px-4 text-sm text-slate-300 hover:bg-gray-800">Skills</a>
+            <a href="#projects" class="block py-2 px-4 text-sm text-slate-300 hover:bg-gray-800">Projects</a>
+            <a href="#experience" class="block py-2 px-4 text-sm text-slate-300 hover:bg-gray-800">Experience</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-slate-300 hover:bg-gray-800">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="about" class="py-24 md:py-32">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-slate-100 leading-tight">
+                Analytics Consultant & <span class="text-blue-400 glow-text">AI Strategist</span>
+            </h1>
+            <p class="mt-6 text-lg text-slate-400 max-w-3xl mx-auto scroll-fade">
+                ISB-trained consultant bridging the gap between complex business challenges and high-impact data science solutions. Passionate about leveraging Generative AI and machine learning to drive quantifiable impact.
+            </p>
+            <div class="mt-10 flex justify-center space-x-4 md:space-x-6 scroll-fade">
+                <a href="mailto:anirudhkumarpentapati@gmail.com" class="text-blue-400 hover:underline">Email</a>
+                <span class="text-slate-500">&bull;</span>
+                <a href="https://www.linkedin.com/in/anirudhkumar98" target="_blank" class="text-blue-400 hover:underline">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Metrics Section -->
+    <section class="py-16 bg-black/20">
+        <div class="container mx-auto px-6 scroll-fade">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="stat-card p-6 rounded-lg">
+                    <div class="text-5xl font-bold text-blue-400 glow-text" id="impact-stat-1">0%</div>
+                    <p class="mt-2 text-slate-400">Boost in Team Performance</p>
+                </div>
+                <div class="stat-card p-6 rounded-lg">
+                    <div class="text-5xl font-bold text-blue-400 glow-text" id="impact-stat-2">0</div>
+                    <p class="mt-2 text-slate-400">Hours of Manual Effort Saved Annually</p>
+                </div>
+                <div class="stat-card p-6 rounded-lg">
+                    <div class="text-5xl font-bold text-blue-400 glow-text" id="impact-stat-3">0%</div>
+                    <p class="mt-2 text-slate-400">Reduction in Human Error</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center section-title mb-16 scroll-fade">Core Competencies</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="skill-card p-6 rounded-lg scroll-fade">
+                    <h3 class="text-xl font-bold text-slate-100 mb-4">Languages & Data Science</h3>
+                    <p class="text-slate-400">Python, SQL, SAS, Pandas, Regression, Classification, Scikit-learn, TensorFlow, Time Series Analysis</p>
+                </div>
+                <div class="skill-card p-6 rounded-lg scroll-fade" style="transition-delay: 100ms;">
+                    <h3 class="text-xl font-bold text-slate-100 mb-4">AI, Big Data & Cloud</h3>
+                    <p class="text-slate-400">Generative AI (RAG, LangChain), NLP (Hugging Face), Predictive Modeling, Apache Spark, Databricks, AWS</p>
+                </div>
+                <div class="skill-card p-6 rounded-lg scroll-fade" style="transition-delay: 200ms;">
+                    <h3 class="text-xl font-bold text-slate-100 mb-4">Strategy & Tools</h3>
+                    <p class="text-slate-400">Stakeholder Management, Process Optimization, Tableau, Power BI, Git, GitHub</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-black/20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center section-title mb-16 scroll-fade">Featured Projects & Case Studies</h2>
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project cards will be injected here by JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Experience & Education Section -->
+    <section id="experience" class="py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center section-title mb-16 scroll-fade">Career & Education Journey</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <div class="border-l-2 border-gray-700 absolute h-full top-0 left-4 md:left-1/2"></div>
+                    <!-- Timeline items will be injected here -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Leadership & Community Section -->
+    <section id="leadership" class="py-24 bg-black/20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center section-title mb-16 scroll-fade">Leadership & Community</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="card p-6 rounded-lg scroll-fade">
+                    <h3 class="text-xl font-bold text-slate-100">COVID-19 Data Management</h3>
+                    <p class="text-sm text-slate-500 mt-1">Government of Telangana, Volunteer</p>
+                    <p class="mt-4 text-slate-400">Assisted in managing critical patient data during the pandemic, collaborating with medical staff to track and support patient recovery progress and outcomes.</p>
+                </div>
+                <div class="card p-6 rounded-lg scroll-fade" style="transition-delay: 100ms;">
+                    <h3 class="text-xl font-bold text-slate-100">Physics Journal, Co-Editor</h3>
+                    <p class="text-sm text-slate-500 mt-1">Academic Publication</p>
+                    <p class="mt-4 text-slate-400">Edited and contributed to a yearly college physics journal, producing extensive research on the topic of superconductivity and fostering a community of scientific inquiry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Section -->
+    <footer id="contact" class="bg-gray-900 text-slate-300 py-16">
+        <div class="container mx-auto px-6 text-center scroll-fade">
+            <h2 class="text-3xl font-bold text-white">Let's Connect</h2>
+            <p class="mt-4 max-w-xl mx-auto text-slate-400">I'm always open to discussing new opportunities, interesting projects, and the future of AI in business.</p>
+            <div class="mt-8">
+                <a href="mailto:anirudhkumarpentapati@gmail.com" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105">
+                    Get In Touch
+                </a>
+            </div>
+            <p class="mt-12 text-slate-500 text-sm">&copy; 2025 Anirudh Kumar Pentapati</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Project Details -->
+    <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50 modal-container">
+        <div class="modal-content rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95">
+            <div class="p-6 md:p-8">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 id="modal-title" class="text-2xl font-bold text-slate-100"></h3>
+                    <button id="modal-close-button" class="text-3xl text-slate-500 hover:text-white transition">&times;</button>
+                </div>
+                <div id="modal-content-body" class="space-y-6 text-slate-400">
+                    <!-- Modal content will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelectorAll('nav a, #mobile-menu a');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                         mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Animated Stats
+            const animateValue = (element, start, end, duration) => {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const currentValue = Math.floor(progress * (end - start) + start);
+                    if (element.id.includes('stat-2')) {
+                        element.innerHTML = currentValue.toLocaleString();
+                    } else {
+                        element.innerHTML = `${currentValue}%`;
+                    }
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            };
+
+            const statElements = document.querySelectorAll('.stat-card');
+            const statObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateValue(document.getElementById('impact-stat-1'), 0, 125, 2000);
+                        animateValue(document.getElementById('impact-stat-2'), 0, 2368, 2000);
+                        animateValue(document.getElementById('impact-stat-3'), 0, 75, 2000);
+                        statObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            if (statElements.length) statObserver.observe(statElements[0].parentElement);
+
+            // Project Data
+            const projects = [
+                 {
+                    title: "Capstone: AI-Powered Tender Analytics Platform",
+                    category: "Academic Group Project (Team of 5)",
+                    summary: "Architected an end-to-end AI platform to solve major inefficiencies in public sector procurement.",
+                    problem: "Public sector procurement faced major inefficiencies due to the manual, time-consuming analysis of unstructured tender documents, leading to missed opportunities and significant administrative overhead.",
+                    action: "Led the strategic definition and architecture of an end-to-end AI platform. This involved engineering a scalable data pipeline on AWS (EC2, S3, RDS) to ingest and process unstructured PDFs. We utilized advanced OCR and NLP (RAG with Gemini models) to extract and structure critical data, which was then stored in a PostgreSQL and FAISS vector database. The solution included an interactive analytics dashboard and an AI-powered RAG chatbot.",
+                    impact: "The platform significantly reduced manual search effort, enabling data-driven procurement analysis for both vendors and officials. It transformed a complex, manual process into an efficient, centralized system, demonstrating a clear path to improved transparency and decision-making in public sector undertakings.",
+                    tech: ["AWS", "Python", "SQL", "NLP", "RAG", "Generative AI", "FAISS"]
+                },
+                {
+                    title: "APP Tagging Automation Project",
+                    category: "Thomson Reuters",
+                    summary: "Conceptualized and led an award-winning automation solution to streamline a critical content workflow.",
+                    problem: "A manual, error-prone HTML tagging process was causing significant productivity loss, high rates of human error, and consuming thousands of hours of manual effort annually.",
+                    action: "I conceptualized and led the development of an automated HTML tagging solution from start to finish. This involved mapping the legacy processes to identify key bottlenecks and then building a streamlined, automated workflow to replace the manual system.",
+                    impact: "The project was a major success, delivering a 59% productivity increase, saving an estimated 2,368 hours of annual manual effort, and achieving a 75% reduction in human error. For this impact, the project received the H1 2023 Site Award.",
+                    tech: ["Process Automation", "Workflow Design", "Project Leadership"]
+                }
+            ];
+
+            const projectsContainer = document.getElementById('projects-container');
+            projects.forEach((project, index) => {
+                const projectCard = `
+                    <div class="card p-6 rounded-lg cursor-pointer scroll-fade" data-index="${index}" style="transition-delay: ${index * 100}ms;">
+                        <h3 class="text-xl font-bold text-slate-100">${project.title}</h3>
+                        <p class="text-sm text-slate-500 mt-1">${project.category}</p>
+                        <p class="mt-4 text-slate-400">${project.summary}</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            ${project.tech.map(t => `<span class="bg-blue-900/50 text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">${t}</span>`).join('')}
+                        </div>
+                        <div class="mt-6 text-blue-400 font-semibold hover:underline">View Case Study &rarr;</div>
+                    </div>
+                `;
+                projectsContainer.innerHTML += projectCard;
+            });
+
+            // Modal Logic
+            const modal = document.getElementById('project-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalContentBody = document.getElementById('modal-content-body');
+            const modalCloseButton = document.getElementById('modal-close-button');
+
+            document.querySelectorAll('#projects-container .card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const project = projects[card.dataset.index];
+                    modalTitle.textContent = project.title;
+                    modalContentBody.innerHTML = `
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-300 mb-2">The Problem</h4>
+                            <p>${project.problem}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-300 mb-2">My Action</h4>
+                            <p>${project.action}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-300 mb-2">The Impact</h4>
+                            <p>${project.impact}</p>
+                        </div>
+                    `;
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    document.body.style.overflow = 'hidden';
+                    setTimeout(() => {
+                        modal.classList.remove('opacity-0');
+                        modal.querySelector('.modal-content').classList.remove('scale-95');
+                    }, 10);
+                });
+            });
+
+            const closeModal = () => {
+                modal.querySelector('.modal-content').classList.add('scale-95');
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    document.body.style.overflow = 'auto';
+                }, 300);
+            };
+
+            modalCloseButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Timeline Data
+            const timelineEvents = [
+                 {
+                    type: 'Education',
+                    title: 'Advanced Management Programme in Business Analytics (AMPBA)',
+                    institution: 'Indian School of Business (ISB)',
+                    date: 'June 2025',
+                    description: 'Intensive, year-long program focused on advanced data science, machine learning, and AI strategy.'
+                },
+                {
+                    type: 'Work',
+                    title: 'Content Specialist',
+                    institution: 'Thomson Reuters',
+                    date: 'Jan 2020 – Aug 2023',
+                    description: 'Drove a 125% boost in team performance by developing new data quality guidelines and SOPs. Led an award-winning automation project.'
+                },
+                {
+                    type: 'Work',
+                    title: 'Process Associate',
+                    institution: 'Genpact',
+                    date: 'Aug 2018 – May 2019',
+                    description: 'Analyzed customer feedback data to identify drivers of dissatisfaction, resulting in a 15% reduction in negative feedback.'
+                },
+                {
+                    type: 'Education',
+                    title: 'Bachelor of Science (Maths, Physics & CompSci)',
+                    institution: "Bhavan's Vivekananda College",
+                    date: 'May 2018',
+                    description: 'Developed a strong quantitative and analytical foundation.'
+                }
+            ];
+            
+            const timelineContainer = document.querySelector('#experience .relative');
+            timelineEvents.forEach((event, index) => {
+                const isLeft = index % 2 !== 0; 
+                
+                const iconMap = { 'Education': '🎓', 'Work': '💼' };
+                
+                const desktopItem = `
+                    <div class="hidden md:flex justify-between items-center w-full mb-8 ${isLeft ? 'flex-row-reverse' : ''} scroll-fade">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-10 h-10 rounded-full border-2 border-blue-500">
+                            <h1 class="mx-auto text-xl">${iconMap[event.type]}</h1>
+                        </div>
+                        <div class="order-1 bg-gray-900/50 rounded-lg shadow-xl w-5/12 px-6 py-4 timeline-item-content">
+                            <h3 class="font-bold text-slate-100 text-lg">${event.title}</h3>
+                            <p class="text-sm leading-snug tracking-wide text-slate-500">${event.institution} &bull; ${event.date}</p>
+                            <p class="text-sm text-slate-400 mt-2">${event.description}</p>
+                        </div>
+                    </div>`;
+
+                const mobileItem = `
+                     <div class="md:hidden mb-8 flex items-center w-full scroll-fade">
+                        <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-10 h-10 rounded-full border-2 border-blue-500 mr-4">
+                           <h1 class="mx-auto text-xl">${iconMap[event.type]}</h1>
+                        </div>
+                        <div class="order-1 bg-gray-900/50 rounded-lg shadow-xl flex-1 px-6 py-4 timeline-item-content">
+                             <h3 class="font-bold text-slate-100 text-lg">${event.title}</h3>
+                            <p class="text-sm leading-snug tracking-wide text-slate-500">${event.institution} &bull; ${event.date}</p>
+                            <p class="text-sm text-slate-400 mt-2">${event.description}</p>
+                        </div>
+                    </div>`;
+
+                timelineContainer.innerHTML += desktopItem + mobileItem;
+            });
+            
+            // Scroll Fade-in Observer
+            const fadeElements = document.querySelectorAll('.scroll-fade');
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => fadeObserver.observe(el));
+
+        });
+    </script>
+</body>
+</html>
+
