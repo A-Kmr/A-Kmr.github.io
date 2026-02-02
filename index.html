@@ -286,24 +286,43 @@
 
             // Project Data
             const projects = [
+                 {{
+                    title: "ContextAI: Universal Research Assistant",
+                    category: "GenAI Product (RAG Engine)",
+                    summary: "An intelligent RAG engine that builds temporary knowledge bases from PDFs and URLs to answer questions with zero hallucinations.",
+                    problem: "Generic LLMs often hallucinate facts and lack access to private, real-time data needed for specialized research.",
+                    action: "Built a full-stack RAG pipeline using LangChain, Google Gemini 1.5, and ChromaDB. Implemented hybrid data ingestion (PDF + Web Scraping) and a 'Smart Recommendation' engine that suggests follow-up research topics.",
+                    impact: "Eliminated hallucinations by grounding all answers in user-provided source text. Reduced research time by allowing users to 'chat' with complex documents instantly.",
+                    tech: ["LangChain", "Gemini 1.5", "Flask", "ChromaDB", "RAG"]
+                },
                  {
-                    title: "Capstone: AI-Powered Tender Analytics Platform",
-                    category: "Academic Group Project (Team of 5)",
+                    title: "MarketSight: Stock Forecasting Engine",
+                    category: "Financial Analytics Dashboard",
+                    summary: "Interactive web app for real-time market trend analysis and ML-driven price forecasting.",
+                    problem: "Retail investors often lack access to institutional-grade technical analysis and predictive modeling tools in a simple interface.",
+                    action: "Developed a Streamlit-based dashboard integrating live Yahoo Finance data. Engineered a Random Forest Regressor to predict short-term price movements based on 50/200-day moving averages and volatility indicators.",
+                    impact: "Democratized financial modeling by providing a no-code interface for complex technical analysis. ( hosted on GitHub for public use).",
+                    tech: ["Python", "Streamlit", "Scikit-Learn", "Plotly", "Random Forest"]
+                },
+                 {
+                    title: "Capstone: AI-Powered Tender Analytics",
+                    category: "Academic Project",
                     summary: "Architected an end-to-end AI platform to solve major inefficiencies in public sector procurement.",
-                    problem: "Public sector procurement faced major inefficiencies due to the manual, time-consuming analysis of unstructured tender documents, leading to missed opportunities and significant administrative overhead.",
-                    action: "Led the strategic definition and architecture of an end-to-end AI platform. This involved engineering a scalable data pipeline on AWS (EC2, S3, RDS) to ingest and process unstructured PDFs. We utilized advanced OCR and NLP (RAG with Gemini models) to extract and structure critical data, which was then stored in a PostgreSQL and FAISS vector database. The solution included an interactive analytics dashboard and an AI-powered RAG chatbot.",
-                    impact: "The platform significantly reduced manual search effort, enabling data-driven procurement analysis for both vendors and officials. It transformed a complex, manual process into an efficient, centralized system, demonstrating a clear path to improved transparency and decision-making in public sector undertakings.",
-                    tech: ["AWS", "Python", "SQL", "NLP", "RAG", "Generative AI", "FAISS"]
+                    problem: "Public sector procurement faced major inefficiencies due to the manual, time-consuming analysis of unstructured tender documents.",
+                    action: "Led the strategic definition and architecture of an end-to-end AI platform. Utilized advanced OCR and NLP (RAG with Gemini models) to extract and structure critical data, stored in a PostgreSQL and FAISS vector database.",
+                    impact: "Significantly reduced manual search effort, enabling data-driven procurement analysis for both vendors and officials.",
+                    tech: ["AWS", "Python", "NLP", "Generative AI", "FAISS"]
                 },
                 {
                     title: "APP Tagging Automation Project",
                     category: "Thomson Reuters",
                     summary: "Conceptualized and led an award-winning automation solution to streamline a critical content workflow.",
-                    problem: "A manual, error-prone HTML tagging process was causing significant productivity loss, high rates of human error, and consuming thousands of hours of manual effort annually.",
-                    action: "I conceptualized and led the development of an automated HTML tagging solution from start to finish. This involved mapping the legacy processes to identify key bottlenecks and then building a streamlined, automated workflow to replace the manual system.",
-                    impact: "The project was a major success, delivering a 59% productivity increase, saving an estimated 2,368 hours of annual manual effort, and achieving a 75% reduction in human error. For this impact, the project received the H1 2023 Site Award.",
-                    tech: ["Process Automation", "Workflow Design", "Project Leadership"]
+                    problem: "A manual, error-prone HTML tagging process was causing significant productivity loss and high rates of human error.",
+                    action: "Conceptualized and led the development of an automated HTML tagging solution. Mapped legacy processes to identify bottlenecks and built a streamlined Python/SQL workflow.",
+                    impact: "Delivered a 59% productivity increase, saved 2,368 hours annually, and reduced human error by 75%. Received the H1 2023 Site Award.",
+                    tech: ["Process Automation", "Workflow Design", "Python", "SQL"]
                 }
+                
             ];
 
             const projectsContainer = document.getElementById('projects-container');
@@ -384,14 +403,14 @@
                 },
                 {
                     type: 'Work',
-                    title: 'Content Specialist',
+                    title: 'Senior Analyst',
                     institution: 'Thomson Reuters',
                     date: 'Jan 2020 – Aug 2023',
                     description: 'Drove a 125% boost in team performance by developing new data quality guidelines and SOPs. Led an award-winning automation project.'
                 },
                 {
                     type: 'Work',
-                    title: 'Process Associate',
+                    title: 'Associate',
                     institution: 'Genpact',
                     date: 'Aug 2018 – May 2019',
                     description: 'Analyzed customer feedback data to identify drivers of dissatisfaction, resulting in a 15% reduction in negative feedback.'
@@ -455,4 +474,5 @@
     </script>
 </body>
 </html>
+
 
