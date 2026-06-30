@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DS Interview Cheat Sheet Hub</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #7c3aed;
+      --accent-2: #06b6d4;
+      --accent-3: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --code: #0b1020;
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #111827 45%, #0b1020 100%);
+      color: var(--text);
+    }
+    .app {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      min-height: 100vh;
+    }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      background: rgba(17, 24, 39, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 20px 16px;
+    }
+    .brand {
+      padding: 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(6,182,212,0.14));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+    .brand h1 { margin: 0 0 6px; font-size: 1.15rem; }
+    .brand p { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.4; }
+    .search {
+      width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--border);
+      background: #0b1220; color: var(--text); outline: none; margin-bottom: 14px;
+    }
+    .nav-group { margin-bottom: 14px; }
+    .group-title {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 12px 10px 8px;
+    }
+    .nav-btn {
+      width: 100%; text-align: left; padding: 12px 14px; border-radius: 14px; border: 1px solid transparent;
+      background: transparent; color: var(--text); cursor: pointer; transition: 0.2s ease;
+      margin-bottom: 8px; font-size: 0.96rem;
+    }
+    .nav-btn:hover, .nav-btn.active {
+      background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(6,182,212,0.12));
+      border-color: var(--border);
+      transform: translateY(-1px);
+    }
+    .content {
+      padding: 28px;
+    }
+    .hero {
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(124,58,237,0.16), rgba(6,182,212,0.14), rgba(245,158,11,0.08));
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .hero h2 { margin: 0 0 10px; font-size: 2rem; }
+    .hero p { margin: 0; color: var(--muted); line-height: 1.6; max-width: 950px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .chip {
+      padding: 8px 12px; border-radius: 999px; font-size: 0.88rem;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.04);
+    }
+    .section { display: none; }
+    .section.active { display: block; }
+    .card {
+      background: rgba(17,24,39,0.78); border: 1px solid var(--border); border-radius: 22px;
+      padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px;
+    }
+    .card h3 { margin-top: 0; margin-bottom: 8px; font-size: 1.35rem; }
+    .card > p { color: var(--muted); margin-top: 0; }
+    details {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 18px;
+      padding: 14px 16px; margin-bottom: 14px;
+    }
+    summary {
+      cursor: pointer; list-style: none; font-weight: 700; display: flex; align-items: center; gap: 10px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    .badge {
+      font-size: 0.74rem; padding: 4px 8px; border-radius: 999px;
+      background: rgba(6,182,212,0.15); color: #7dd3fc; border: 1px solid var(--border);
+    }
+    .item {
+      margin-top: 14px; padding: 14px; border-radius: 16px; background: rgba(0,0,0,0.18); border: 1px solid var(--border);
+    }
+    .item strong { color: #fff; }
+    .desc { color: var(--muted); margin: 8px 0 10px; }
+    pre {
+      margin: 0; background: var(--code); color: #dbeafe; padding: 14px; border-radius: 14px;
+      overflow-x: auto; border: 1px solid rgba(255,255,255,0.06); white-space: pre-wrap;
+    }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.93rem; }
+    .grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;
+    }
+    .mini {
+      padding: 14px; border-radius: 16px; border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+    }
+    .footer-note { color: var(--muted); font-size: 0.9rem; }
+    .back-btn {
+        display: inline-block; margin-bottom: 20px; color: #a78bfa; text-decoration: none; font-weight: 600; font-size: 0.9rem;
+    }
+    .back-btn:hover { text-decoration: underline; }
+    @media (max-width: 980px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: relative; height: auto; }
+      .content { padding: 18px; }
+      .grid { grid-template-columns: 1fr; }
+      .hero h2 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>DS Interview Cheat Sheet Hub</h1>
+        <p>Clickable reference for Pandas, SQL, visuals, sklearn pipelines, GLM, and interview ML syntax[cite: 3].</p>
+      </div>
+      <input id="search" class="search" type="text" placeholder="Search syntax, model, function..." />
+
+      <div class="nav-group">
+        <div class="group-title">Core</div>
+        <button class="nav-btn active" data-target="home">Overview</button>
+        <button class="nav-btn" data-target="pandas">Pandas</button>
+        <button class="nav-btn" data-target="sql">SQL patterns</button>
+        <button class="nav-btn" data-target="visuals">Plots & visuals</button>
+      </div>
+      <div class="nav-group">
+        <div class="group-title">ML</div>
+        <button class="nav-btn" data-target="prep">ML preprocessing</button>
+        <button class="nav-btn" data-target="classification">Classification</button>
+        <button class="nav-btn" data-target="regression">Regression</button>
+        <button class="nav-btn" data-target="clustering">Clustering</button>
+        <button class="nav-btn" data-target="validation">Validation & tuning</button>
+        <button class="nav-btn" data-target="metrics">Metrics</button>
+        <button class="nav-btn" data-target="glm">Statsmodels GLM</button>
+      </div>
+      <div class="nav-group">
+        <div class="group-title">Notes</div>
+        <button class="nav-btn" data-target="interview">Interview reminders</button>
+      </div>
+    </aside>
+
+    <main class="content">
+      <a href="index.html" class="back-btn">&larr; Return to Central Portfolio</a>
+      <section id="home" class="section active searchable">
+        <div class="hero">
+          <h2>Practice with this open beside you[cite: 3].</h2>
+          <p>Use the sidebar to jump by topic. Each card gives syntax, a one-line meaning, and a compact example so you can copy the pattern fast while practicing SQL, Pandas, or ML coding[cite: 3].</p>
+          <div class="chips">
+            <span class="chip">Pandas cleaning</span>
+            <span class="chip">GroupBy & transforms</span>
+            <span class="chip">Matplotlib + Seaborn</span>
+            <span class="chip">Sklearn templates</span>
+            <span class="chip">GLM syntax</span>
+            <span class="chip">Metrics & tuning</span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="mini">
+            <h3>Libraries included</h3>
+            <p>pandas, numpy, matplotlib, seaborn, scikit-learn, statsmodels[cite: 3].</p>
+          </div>
+          <div class="mini">
+            <h3>Best use</h3>
+            <p>Keep this page open while solving StrataScratch, LeetCode SQL, notebooks, and mock DS coding rounds[cite: 3].</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="pandas" class="section searchable">
+        <div class="card">
+          <h3>Pandas</h3>
+          <p>Cleaning, selection, feature engineering, aggregation, joins, and ranking[cite: 3].</p>
+
+          <details open>
+            <summary>Loading & inspection <span class="badge">basics</span></summary>
+            <div class="item"><strong>Load CSV</strong><div class="desc">Read a CSV file into a DataFrame[cite: 3].</div><pre><code>df = pd.read_csv('data.csv')</code></pre></div>
+            <div class="item"><strong>First rows</strong><div class="desc">Preview the first 5 rows[cite: 3].</div><pre><code>df.head()</code></pre></div>
+            <div class="item"><strong>Shape</strong><div class="desc">See row and column count[cite: 3].</div><pre><code>df.shape</code></pre></div>
+            <div class="item"><strong>Info</strong><div class="desc">Check dtypes and non-null counts[cite: 3].</div><pre><code>df.info()</code></pre></div>
+            <div class="item"><strong>Null count</strong><div class="desc">Count missing values by column[cite: 3].</div><pre><code>df.isnull().sum()</code></pre></div>
+          </details>
+
+          <details>
+            <summary>Selection & filtering <span class="badge">rows/cols</span></summary>
+            <div class="item"><strong>One column</strong><div class="desc">Select one column as a Series[cite: 3].</div><pre><code>df['age']</code></pre></div>
+            <div class="item"><strong>Multiple columns</strong><div class="desc">Select multiple columns as a DataFrame[cite: 3].</div><pre><code>df[['age', 'income']]</code></pre></div>
+            <div class="item"><strong>Condition filter</strong><div class="desc">Keep only rows matching a condition[cite: 3].</div><pre><code>df[df['age'] > 30]</code></pre></div>
+            <div class="item"><strong>loc</strong><div class="desc">Select by labels[cite: 3].</div><pre><code>df.loc[0:4, ['age', 'income']]</code></pre></div>
+            <div class="item"><strong>iloc</strong><div class="desc">Select by integer position[cite: 3].</div><pre><code>df.iloc[0:4, 0:2]</code></pre></div>
+          </details>
+
+          <details>
+            <summary>Cleaning <span class="badge">nulls/types</span></summary>
+            <div class="item"><strong>Fill with median</strong><div class="desc">Replace numeric missing values with the median[cite: 3].</div><pre><code>df['age'] = df['age'].fillna(df['age'].median())</code></pre></div>
+            <div class="item"><strong>Fill with mean</strong><div class="desc">Replace numeric missing values with the mean[cite: 3].</div><pre><code>df['income'] = df['income'].fillna(df['income'].mean())</code></pre></div>
+            <div class="item"><strong>Forward fill</strong><div class="desc">Use the previous valid row's value[cite: 3].</div><pre><code>df['score'] = df['score'].fillna(method='ffill')</code></pre></div>
+            <div class="item"><strong>Drop null rows</strong><div class="desc">Remove rows where key columns are null[cite: 3].</div><pre><code>df = df.dropna(subset=['target'])</code></pre></div>
+            <div class="item"><strong>Drop duplicates</strong><div class="desc">Remove repeated rows based on a key[cite: 3].</div><pre><code>df = df.drop_duplicates(subset=['customer_id'])</code></pre></div>
+            <div class="item"><strong>String clean</strong><div class="desc">Trim spaces and lowercase text[cite: 3].</div><pre><code>df['region'] = df['region'].str.strip().str.lower()</code></pre></div>
+            <div class="item"><strong>Type cast</strong><div class="desc">Convert a column to another dtype[cite: 3].</div><pre><code>df['age'] = df['age'].astype(int)</code></pre></div>
+          </details>
+
+          <details>
+            <summary>Feature engineering <span class="badge">new cols</span></summary>
+            <div class="item"><strong>Create feature</strong><div class="desc">Build a new column from existing columns[cite: 3].</div><pre><code>df['income_per_purchase'] = df['income'] / df['num_purchases']</code></pre></div>
+            <div class="item"><strong>apply + lambda</strong><div class="desc">Apply a custom function row-wise or element-wise[cite: 3].</div><pre><code>df['age_bucket'] = df['age'].apply(lambda x: '30+' if x >= 30 else '&lt;30')</code></pre></div>
+            <div class="item"><strong>map</strong><div class="desc">Convert labels to values with a dictionary[cite: 3].</div><pre><code>df['churn_flag'] = df['churn'].map({'Y': 1, 'N': 0})</code></pre></div>
+            <div class="item"><strong>One-hot encode</strong><div class="desc">Convert a categorical column into binary indicator columns[cite: 3].</div><pre><code>df = pd.get_dummies(df, columns=['region'], drop_first=True)</code></pre></div>
+          </details>
+
+          <details>
+            <summary>Aggregation & joins <span class="badge">groupby</span></summary>
+            <div class="item"><strong>groupby + agg</strong><div class="desc">Collapse rows into one summary row per group[cite: 3].</div><pre><code>df.groupby('region').agg({'sales': ['sum', 'mean'], 'customer_id': 'count'})</code></pre></div>
+            <div class="item"><strong>groupby + transform</strong><div class="desc">Keep original shape and broadcast group stats back to each row[cite: 3].</div><pre><code>df['dept_avg_salary'] = df.groupby('dept')['salary'].transform('mean')</code></pre></div>
+            <div class="item"><strong>value_counts</strong><div class="desc">Count the frequency of each category[cite: 3].</div><pre><code>df['region'].value_counts()</code></pre></div>
+            <div class="item"><strong>merge</strong><div class="desc">Join two DataFrames on a common key[cite: 3].</div><pre><code>df = pd.merge(df_customers, df_orders, on='customer_id', how='left')</code></pre></div>
+            <div class="item"><strong>concat</strong><div class="desc">Stack DataFrames by rows or columns[cite: 3].</div><pre><code>df = pd.concat([df_jan, df_feb], axis=0)</code></pre></div>
+            <div class="item"><strong>pivot table</strong><div class="desc">Reshape grouped summaries into a matrix view[cite: 3].</div><pre><code>df.pivot_table(values='sales', index='region', columns='month', aggfunc='sum')</code></pre></div>
+          </details>
+
+          <details>
+            <summary>Sorting & windows <span class="badge">ranking</span></summary>
+            <div class="item"><strong>Sort values</strong><div class="desc">Sort rows by one column[cite: 3].</div><pre><code>df.sort_values('sales', ascending=False)</code></pre></div>
+            <div class="item"><strong>Rank</strong><div class="desc">Assign rank values within a group or globally[cite: 3].</div><pre><code>df['rank'] = df.groupby('dept')['salary'].rank(ascending=False)</code></pre></div>
+            <div class="item"><strong>Rolling mean</strong><div class="desc">Compute moving average over a fixed window[cite: 3].</div><pre><code>df['rolling_avg'] = df['sales'].rolling(window=7).mean()</code></pre></div>
+            <div class="item"><strong>Cumulative sum</strong><div class="desc">Running total down the rows[cite: 3].</div><pre><code>df['cum_sales'] = df['sales'].cumsum()</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="sql" class="section searchable">
+        <div class="card">
+          <h3>SQL patterns</h3>
+          <p>Fast reminders for filters, aggregation, ranking, and common interview query shapes[cite: 3].</p>
+          <details open>
+            <summary>Core query patterns <span class="badge">must know</span></summary>
+            <div class="item"><strong>WHERE</strong><div class="desc">Filter rows before aggregation[cite: 3].</div><pre><code>SELECT * FROM orders WHERE status = 'completed';</code></pre></div>
+            <div class="item"><strong>GROUP BY + HAVING</strong><div class="desc">Aggregate first, then filter grouped results[cite: 3].</div><pre><code>SELECT customer_id, COUNT(*) AS total_orders
+FROM orders
+GROUP BY customer_id
+HAVING COUNT(*) > 2;</code></pre></div>
+            <div class="item"><strong>CASE WHEN</strong><div class="desc">Create conditional logic inside SQL[cite: 3].</div><pre><code>SELECT order_id,
+       CASE WHEN amount >= 1000 THEN 'high' ELSE 'low' END AS amount_bucket
+FROM orders;</code></pre></div>
+            <div class="item"><strong>CTE</strong><div class="desc">Break a complex query into readable steps[cite: 3].</div><pre><code>WITH monthly_sales AS (
+  SELECT customer_id, DATE_TRUNC('month', order_date) AS month, SUM(amount) AS total_amount
+  FROM orders
+  GROUP BY customer_id, DATE_TRUNC('month', order_date)
+)
+SELECT * FROM monthly_sales;</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="visuals" class="section searchable">
+        <div class="card">
+          <h3>Plots & visuals</h3>
+          <p>Minimal syntax for the graph types most likely to appear in DS notebooks and interview tasks[cite: 3].</p>
+          <details open>
+            <summary>Imports <span class="badge">setup</span></summary>
+            <div class="item"><strong>Matplotlib + Seaborn</strong><div class="desc">Import the two main Python plotting libraries[cite: 3].</div><pre><code>import matplotlib.pyplot as plt
+import seaborn as sns</code></pre></div>
+          </details>
+          <details>
+            <summary>Matplotlib <span class="badge">core plots</span></summary>
+            <div class="item"><strong>Line plot</strong><div class="desc">Show trend over time or sequence[cite: 3].</div><pre><code>plt.plot(df['date'], df['sales'])
+plt.xlabel('Date'); plt.ylabel('Sales'); plt.title('Sales Trend')
+plt.show()</code></pre></div>
+            <div class="item"><strong>Bar plot</strong><div class="desc">Compare values across categories[cite: 3].</div><pre><code>plt.bar(df['region'], df['sales'])
+plt.title('Sales by Region')
+plt.show()</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="prep" class="section searchable">
+        <div class="card">
+          <h3>ML preprocessing</h3>
+          <p>Reusable boilerplate for imports, splits, scaling, and encoding[cite: 3].</p>
+          <details open>
+            <summary>Universal setup <span class="badge">template</span></summary>
+            <div class="item"><strong>Imports</strong><div class="desc">Core setup for most sklearn interview problems[cite: 3].</div><pre><code>import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler</code></pre></div>
+            <div class="item"><strong>Train/test split</strong><div class="desc">Create train and test sets for model evaluation[cite: 3].</div><pre><code>X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)</code></pre></div>
+            <div class="item"><strong>Scaling</strong><div class="desc">Fit scaler on train only and reuse it on test data[cite: 3].</div><pre><code>scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="classification" class="section searchable">
+        <div class="card">
+          <h3>Classification models</h3>
+          <p>Swap the model block; the rest of the pipeline stays almost the same[cite: 3].</p>
+          <details open>
+            <summary>Logistic regression <span class="badge">baseline</span></summary>
+            <div class="item"><strong>Syntax</strong><div class="desc">Train a classification baseline with probability output[cite: 3].</div><pre><code>from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, roc_auc_score
+
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+print(classification_report(y_test, y_pred))</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="regression" class="section searchable">
+        <div class="card">
+          <h3>Regression models</h3>
+          <p>Templates for linear and regularized regression[cite: 3].</p>
+          <details open>
+            <summary>Linear regression <span class="badge">classic</span></summary>
+            <div class="item"><strong>Syntax</strong><div class="desc">Fit a line to predict a continuous target[cite: 3].</div><pre><code>from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="clustering" class="section searchable">
+        <div class="card">
+          <h3>Clustering</h3>
+          <p>Unsupervised template for K-Means and cluster labeling[cite: 3].</p>
+          <details open>
+            <summary>K-Means <span class="badge">unsupervised</span></summary>
+            <div class="item"><strong>Syntax</strong><div class="desc">Group rows into K clusters based on feature similarity[cite: 3].</div><pre><code>from sklearn.cluster import KMeans
+
+model = KMeans(n_clusters=3, random_state=42)
+model.fit(X_train)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="validation" class="section searchable">
+        <div class="card">
+          <h3>Validation & tuning</h3>
+          <p>Use these patterns when the prompt asks for tuning or a more reliable estimate[cite: 3].</p>
+          <details open>
+            <summary>Grid search <span class="badge">tuning</span></summary>
+            <div class="item"><strong>GridSearchCV</strong><div class="desc">Search parameter combinations and return the best model settings[cite: 3].</div><pre><code>from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+
+params = {'n_estimators': [50, 100], 'max_depth': [3, 5, None]}
+grid = GridSearchCV(RandomForestClassifier(), params, cv=5, scoring='roc_auc')
+grid.fit(X_train, y_train)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="metrics" class="section searchable">
+        <div class="card">
+          <h3>Metrics</h3>
+          <p>Minimal metric syntax for classification and regression[cite: 3].</p>
+          <details open>
+            <summary>Classification metrics <span class="badge">pred classes</span></summary>
+            <div class="item"><strong>AUC-ROC</strong><div class="desc">Measure ranking quality using predicted probabilities[cite: 3].</div><pre><code>from sklearn.metrics import roc_auc_score
+roc_auc_score(y_test, model.predict_proba(X_test)[:, 1])</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="glm" class="section searchable">
+        <div class="card">
+          <h3>Statsmodels GLM</h3>
+          <p>Useful for interpretability, coefficients, p-values, and summary output[cite: 3].</p>
+          <details open>
+            <summary>Logistic GLM / Logit <span class="badge">binary target</span></summary>
+            <div class="item"><strong>Fit logistic model</strong><div class="desc">Train a binary classification GLM with summary output[cite: 3].</div><pre><code>import statsmodels.api as sm
+X = sm.add_constant(X)
+model = sm.Logit(y, X).fit()
+print(model.summary())</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="interview" class="section searchable">
+        <div class="card">
+          <h3>Interview reminders</h3>
+          <p>Quick rules to avoid common mistakes during coding rounds[cite: 3].</p>
+          <details open>
+            <summary>Rules to remember <span class="badge">fast checks</span></summary>
+            <div class="item"><strong>fit on train only</strong><div class="desc">Never fit scalers or encoders on test data[cite: 3].</div><pre><code>X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)</code></pre></div>
+          </details>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.section');
+    const search = document.getElementById('search');
+
+    function showSection(id) {
+      sections.forEach(s => s.classList.toggle('active', s.id === id));
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    buttons.forEach(btn => btn.addEventListener('click', () => showSection(btn.dataset.target)));
+
+    search.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) {
+        document.querySelectorAll('.searchable details, .searchable .item').forEach(el => el.style.display = '');
+        return;
+      }
+      document.querySelectorAll('.searchable details').forEach(detail => {
+        let matched = false;
+        detail.querySelectorAll('.item').forEach(item => {
+          const text = item.innerText.toLowerCase();
+          const ok = text.includes(q);
+          item.style.display = ok ? '' : 'none';
+          if (ok) matched = true;
+        });
+        detail.style.display = matched ? '' : 'none';
+        if (matched) detail.open = true;
+      });
+    });
+  </script>
+</body>
+</html>

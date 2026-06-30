@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA Starter Cheat Sheet Hub</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --surface: rgba(12, 20, 36, 0.88);
+      --surface-2: rgba(21, 32, 54, 0.92);
+      --card: rgba(15, 23, 42, 0.88);
+      --text: #e5eefc;
+      --muted: #98a8c6;
+      --primary: #7c3aed;
+      --cyan: #06b6d4;
+      --green: #22c55e;
+      --orange: #f59e0b;
+      --pink: #ec4899;
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 16px 40px rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124,58,237,0.2), transparent 26%),
+        radial-gradient(circle at top right, rgba(6,182,212,0.14), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(236,72,153,0.12), transparent 22%),
+        linear-gradient(135deg, #07111f 0%, #0f172a 45%, #111827 100%);
+    }
+    .app { display: grid; grid-template-columns: 320px 1fr; min-height: 100vh; }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; overflow-y: auto;
+      padding: 20px 16px; background: rgba(2,6,23,0.82); backdrop-filter: blur(14px);
+      border-right: 1px solid var(--border);
+    }
+    .brand {
+      padding: 18px; border-radius: 22px; border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(6,182,212,0.12), rgba(34,197,94,0.1));
+      box-shadow: var(--shadow); margin-bottom: 16px;
+    }
+    .brand h1 { margin: 0 0 8px; font-size: 1.2rem; }
+    .brand p { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
+    .search {
+      width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--border);
+      background: rgba(15,23,42,0.95); color: var(--text); outline: none; margin-bottom: 14px;
+    }
+    .group-title {
+      font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 12px 10px 8px;
+    }
+    .nav-btn {
+      width: 100%; text-align: left; padding: 12px 14px; border-radius: 14px; border: 1px solid transparent;
+      background: transparent; color: var(--text); cursor: pointer; transition: 0.2s ease; margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+    .nav-btn:hover, .nav-btn.active {
+      background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(6,182,212,0.12));
+      border-color: var(--border); transform: translateY(-1px);
+    }
+    main { padding: 28px; }
+    .hero {
+      padding: 24px; border-radius: 28px; border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(124,58,237,0.16), rgba(6,182,212,0.1), rgba(34,197,94,0.08));
+      box-shadow: var(--shadow); margin-bottom: 22px;
+    }
+    .hero h2 { margin: 0 0 10px; font-size: clamp(2rem, 2vw + 1rem, 3rem); }
+    .hero p { margin: 0; color: var(--muted); max-width: 940px; line-height: 1.6; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .chip {
+      padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.04);
+      font-size: 0.86rem;
+    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px;
+    }
+    .card h3 { margin-top: 0; margin-bottom: 8px; font-size: 1.4rem; }
+    .card > p { color: var(--muted); margin-top: 0; }
+    details {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 18px; padding: 14px 16px; margin-bottom: 14px;
+    }
+    summary {
+      list-style: none; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 10px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    .badge {
+      font-size: 0.74rem; padding: 4px 8px; border-radius: 999px; color: #c4b5fd; background: rgba(124,58,237,0.15); border: 1px solid var(--border);
+    }
+    .item {
+      margin-top: 14px; padding: 14px; border-radius: 16px; background: rgba(2,6,23,0.24); border: 1px solid var(--border);
+    }
+    .item strong { color: #fff; }
+    .desc { color: var(--muted); margin: 8px 0 10px; }
+    pre {
+      margin: 0; background: #050b18; color: #dbeafe; padding: 14px; border-radius: 14px; overflow-x: auto;
+      border: 1px solid rgba(255,255,255,0.06); white-space: pre-wrap;
+    }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    .mini { padding: 16px; border-radius: 18px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { background: rgba(255,255,255,0.04); }
+    a { color: #7dd3fc; }
+    .back-btn {
+        display: inline-block; margin-bottom: 20px; color: #06b6d4; text-decoration: none; font-weight: 600; font-size: 0.9rem;
+    }
+    .back-btn:hover { text-decoration: underline; }
+    @media (max-width: 980px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: relative; height: auto; }
+      main { padding: 18px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>DSA Starter Hub</h1>
+        <p>Made for beginners: what topics mean, how to recognize patterns, simple templates, Big O, and how to think through problems.</p>
+      </div>
+      <input id="search" class="search" type="text" placeholder="Search binary search, DFS, heap, DP..." />
+
+      <div class="group-title">Start here</div>
+      <button class="nav-btn active" data-target="overview">Overview</button>
+      <button class="nav-btn" data-target="bigo">Big O</button>
+      <button class="nav-btn" data-target="thinking">How to think</button>
+
+      <div class="group-title">Core patterns</div>
+      <button class="nav-btn" data-target="arrays">Arrays & strings</button>
+      <button class="nav-btn" data-target="linked">Linked lists</button>
+      <button class="nav-btn" data-target="stackqueue">Stack & queue</button>
+      <button class="nav-btn" data-target="treesgraphs">Trees & graphs</button>
+      <button class="nav-btn" data-target="patterns">Problem patterns</button>
+      <button class="nav-btn" data-target="dpgreedy">DP & greedy</button>
+      <button class="nav-btn" data-target="heaps">Heap / top k</button>
+      <button class="nav-btn" data-target="backtracking">Backtracking</button>
+
+      <div class="group-title">Practice help</div>
+      <button class="nav-btn" data-target="templates">Code templates</button>
+      <button class="nav-btn" data-target="mistakes">Common mistakes</button>
+    </aside>
+
+    <main>
+      <a href="index.html" class="back-btn">&larr; Return to Central Portfolio</a>
+      <section id="overview" class="panel active searchable">
+        <div class="hero">
+          <h2>DSA without the confusion.</h2>
+          <p>This page helps you recognize what kind of problem you are looking at, which pattern usually fits it, and what starter code shape to try first.</p>
+          <div class="chips">
+            <span class="chip">Pattern recognition</span>
+            <span class="chip">Simple Big O</span>
+            <span class="chip">Code skeletons</span>
+            <span class="chip">How to think</span>
+            <span class="chip">Common traps</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="bigo" class="panel searchable">
+        <div class="card">
+          <h3>Big O in simple language</h3>
+          <p>Big O tells you how code grows as input size grows.</p>
+          <details open>
+            <summary>Common time complexities <span class="badge">must know</span></summary>
+            <div class="item"><strong>O(1)</strong><div class="desc">Constant time.</div><pre><code>arr[0]</code></pre></div>
+            <div class="item"><strong>O(log n)</strong><div class="desc">Binary search style space cutting.</div><pre><code>while left <= right:
+    mid = (left + right) // 2</code></pre></div>
+            <div class="item"><strong>O(n)</strong><div class="desc">Linear scans.</div><pre><code>for x in arr: pass</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="thinking" class="panel searchable">
+        <div class="card">
+          <h3>How to think through a problem</h3>
+          <p>This is the part most beginners need but most cheat sheets skip.</p>
+          <details open>
+            <summary>Simple solving flow <span class="badge">mindset</span></summary>
+            <div class="item"><strong>1. Identify the input type</strong><div class="desc">Array, string, linked list, tree, graph, matrix.</div></div>
+            <div class="item"><strong>2. Check constraints</strong><div class="desc">Input size dictates your boundary complexity metrics.</div></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="arrays" class="panel searchable">
+        <div class="card">
+          <h3>Arrays & strings</h3>
+          <p>These are the most common starting problems in DSA practice.</p>
+          <details open>
+            <summary>Templates <span class="badge">arrays</span></summary>
+            <div class="item"><strong>Two pointers</strong><div class="desc">Compare left and right boundaries.</div><pre><code>left, right = 0, len(arr) - 1
+while left < right: pass</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="linked" class="panel searchable">
+        <div class="card">
+          <h3>Linked lists</h3>
+          <p>Pointer tracking models when index features are missing.</p>
+          <details open>
+            <summary>Pointers <span class="badge">nodes</span></summary>
+            <div class="item"><strong>Fast and slow pointers</strong><div class="desc">Cycle mapping loops.</div><pre><code>slow = fast = head
+while fast and fast.next:
+    slow = slow.next
+    fast = fast.next.next</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="stackqueue" class="panel searchable">
+        <div class="card">
+          <h3>Stack & queue</h3>
+          <p>LIFO vs FIFO tracking components.</p>
+        </section>
+
+      <section id="treesgraphs" class="panel searchable">
+        <div class="card">
+          <h3>Trees & graphs</h3>
+          <p>Node link traversal pipelines.</p>
+        </section>
+
+      <section id="patterns" class="panel searchable">
+        <div class="card">
+          <h3>Pattern recognition</h3>
+          <p>Match question shapes to families.</p>
+        </section>
+
+      <section id="dpgreedy" class="panel searchable">
+        <div class="card">
+          <h3>Dynamic programming & greedy</h3>
+          <p>Memoized arrays vs absolute greedy steps.</p>
+        </section>
+
+      <section id="heaps" class="panel searchable">
+        <div class="card">
+          <h3>Heap / Top K</h3>
+          <p>Priority order extraction structures.</p>
+        </section>
+
+      <section id="backtracking" class="panel searchable">
+        <div class="card">
+          <h3>Backtracking</h3>
+          <p>Recursive step attempts with state undo features.</p>
+        </section>
+
+      <section id="templates" class="panel searchable">
+        <div class="card">
+          <h3>Starter code templates</h3>
+          <p>Code structural skeleton baselines.</p>
+        </section>
+
+      <section id="mistakes" class="panel searchable">
+        <div class="card">
+          <h3>Common beginner mistakes</h3>
+          <p>Programmatic behaviors to avoid.</p>
+        </section>
+    </main>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.nav-btn');
+    const panels = document.querySelectorAll('.panel');
+    const search = document.getElementById('search');
+
+    function showPanel(id) {
+      panels.forEach(p => p.classList.toggle('active', p.id === id));
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    buttons.forEach(btn => btn.addEventListener('click', () => showPanel(btn.dataset.target)));
+
+    search.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) {
+        document.querySelectorAll('.searchable details, .searchable .item').forEach(el => el.style.display = '');
+        return;
+      }
+      document.querySelectorAll('.searchable details').forEach(detail => {
+        let matched = false;
+        detail.querySelectorAll('.item').forEach(item => {
+          const text = item.innerText.toLowerCase();
+          const ok = text.includes(q);
+          item.style.display = ok ? '' : 'none';
+          if (ok) matched = true;
+        });
+        detail.style.display = matched ? '' : 'none';
+        if (matched) detail.open = true;
+      });
+    });
+  </script>
+</body>
+</html>
