@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ML Coding Reference Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f8fc;
+      --surface: #ffffff;
+      --surface-2: #f8fbff;
+      --text: #1f2937;
+      --muted: #5f6b7a;
+      --border: rgba(17,24,39,0.09);
+      --primary: #2563eb;
+      --primary-soft: rgba(37,99,235,0.10);
+      --teal: #0f766e;
+      --teal-soft: rgba(15,118,110,0.10);
+      --violet: #7c3aed;
+      --violet-soft: rgba(124,58,237,0.10);
+      --amber: #d97706;
+      --amber-soft: rgba(217,119,6,0.10);
+      --danger: #dc2626;
+      --shadow: 0 12px 30px rgba(20, 35, 63, 0.08);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Manrope, Inter, system-ui, sans-serif;
+      background: linear-gradient(180deg, #f8fbff 0%, #f4f7fb 100%);
+      color: var(--text);
+    }
+    .app { display: grid; grid-template-columns: 320px 1fr; min-height: 100vh; }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; overflow-y: auto;
+      padding: 20px 16px; background: rgba(255,255,255,0.78); backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+    }
+    .brand {
+      padding: 18px; border-radius: 24px; background: linear-gradient(135deg, #eef4ff, #eefbf8, #faf4ff);
+      border: 1px solid var(--border); box-shadow: var(--shadow); margin-bottom: 16px;
+    }
+    .brand h1 { margin: 0 0 8px; font-size: 1.22rem; }
+    .brand p { margin: 0; color: var(--muted); line-height: 1.55; font-size: 0.94rem; }
+    .search {
+      width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--border);
+      background: #fff; color: var(--text); outline: none; margin-bottom: 14px; font-family: inherit;
+    }
+    .group-title {
+      font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 12px 10px 8px;
+    }
+    .nav-btn {
+      width: 100%; text-align: left; padding: 12px 14px; border-radius: 14px; border: 1px solid transparent;
+      background: transparent; color: var(--text); cursor: pointer; transition: 0.2s ease; margin-bottom: 8px;
+      font-size: 0.95rem; font-family: inherit;
+    }
+    .nav-btn:hover, .nav-btn.active {
+      background: linear-gradient(135deg, #eef4ff, #eefbf8); border-color: var(--border); transform: translateY(-1px);
+    }
+    main { padding: 28px; }
+    .hero {
+      padding: 26px; border-radius: 28px; border: 1px solid var(--border);
+      background: linear-gradient(135deg, #eef4ff, #f1fbff 40%, #f8f6ff 100%);
+      box-shadow: var(--shadow); margin-bottom: 22px;
+    }
+    .hero h2 { margin: 0 0 12px; font-size: clamp(2rem, 2vw + 1rem, 3rem); }
+    .hero p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 980px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .chip {
+      padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.7); border: 1px solid var(--border); font-size: 0.87rem;
+    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 22px; box-shadow: var(--shadow); margin-bottom: 20px;
+    }
+    .card h3 { margin-top: 0; margin-bottom: 8px; font-size: 1.45rem; }
+    .card > p { color: var(--muted); margin-top: 0; line-height: 1.65; }
+    details {
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 18px; padding: 14px 16px; margin-bottom: 14px;
+    }
+    summary {
+      list-style: none; cursor: pointer; font-weight: 800; display: flex; align-items: center; gap: 10px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    .badge {
+      font-size: 0.74rem; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--primary-soft); color: var(--primary);
+    }
+    .item {
+      margin-top: 14px; padding: 16px; border-radius: 18px; background: #fff; border: 1px solid var(--border);
+    }
+    .item strong { color: #111827; }
+    .desc { color: var(--muted); margin: 8px 0 12px; line-height: 1.6; }
+    pre {
+      margin: 0; background: #0f172a; color: #e5f0ff; padding: 16px; border-radius: 16px; overflow-x: auto; white-space: pre-wrap;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    code { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.91rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    .mini { padding: 16px; border-radius: 18px; border: 1px solid var(--border); background: #fff; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; overflow: hidden; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { background: #f8fbff; }
+    .blue { background: var(--primary-soft); color: var(--primary); }
+    .teal { background: var(--teal-soft); color: var(--teal); }
+    .violet { background: var(--violet-soft); color: var(--violet); }
+    .amber { background: var(--amber-soft); color: var(--amber); }
+    .note { color: var(--muted); font-size: 0.94rem; }
+    @media (max-width: 980px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: relative; height: auto; }
+      main { padding: 18px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>ML Coding Reference Hub</h1>
+        <p>A lighter, fuller version of your old cheat sheet. It is built as a reusable resource you can copy from for most ML coding tasks.</p>
+      </div>
+      <input id="search" class="search" type="text" placeholder="Search imports, fillna, xgboost, metrics..." />
+
+      <div class="group-title">Start</div>
+      <button class="nav-btn active" data-target="overview">Overview</button>
+      <button class="nav-btn" data-target="imports">Imports</button>
+      <button class="nav-btn" data-target="loading">Load files</button>
+      <button class="nav-btn" data-target="eda">Inspect data</button>
+      <button class="nav-btn" data-target="cleaning">Clean data</button>
+      <button class="nav-btn" data-target="features">Features</button>
+      <button class="nav-btn" data-target="split">X, y and split</button>
+      <button class="nav-btn" data-target="preprocess">Preprocessing</button>
+
+      <div class="group-title">Models</div>
+      <button class="nav-btn" data-target="classification">Classification</button>
+      <button class="nav-btn" data-target="regression">Regression</button>
+      <button class="nav-btn" data-target="clustering">Clustering</button>
+      <button class="nav-btn" data-target="timeseries">Time series basics</button>
+      <button class="nav-btn" data-target="glm">Statsmodels</button>
+
+      <div class="group-title">Evaluation</div>
+      <button class="nav-btn" data-target="predictions">Predictions</button>
+      <button class="nav-btn" data-target="metrics">Metrics</button>
+      <button class="nav-btn" data-target="tuning">Validation & tuning</button>
+      <button class="nav-btn" data-target="plots">Plots</button>
+      <button class="nav-btn" data-target="templates">End-to-end templates</button>
+    </aside>
+
+    <main>
+      <section id="overview" class="panel active searchable">
+        <div class="hero">
+          <h2>Your complete ML coding reference.</h2>
+          <p>This version is built to be more useful than the earlier one: lighter look, cleaner spacing, fuller Pandas cleaning coverage, more file-loading options, more models, more metrics, and clearer end-to-end templates. The goal is not just to show syntax, but to help you understand where each block fits in a real machine learning workflow.</p>
+          <div class="chips">
+            <span class="chip">Imports by task</span>
+            <span class="chip">CSV / Excel / PDF</span>
+            <span class="chip">Fillna + encoding</span>
+            <span class="chip">All main sklearn models</span>
+            <span class="chip">Metrics by problem type</span>
+            <span class="chip">Copy-and-modify templates</span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="mini"><h3>How to use this</h3><p>Open this while practicing. Start with load → inspect → clean → feature engineer → define X and y → split → preprocess → fit model → predict → evaluate.</p></div>
+          <div class="mini"><h3>What to remember</h3><p>You do not need to memorize every line. Learn the workflow and the small code skeletons, then adapt column names and models based on the problem.</p></div>
+        </div>
+      </section>
+
+      <section id="imports" class="panel searchable">
+        <div class="card">
+          <h3>Imports</h3>
+          <p>These are the core Python imports you will use again and again. You rarely need everything at once, but knowing the groups helps you build the right script quickly.</p>
+          <details open>
+            <summary>Core data imports <span class="badge blue">always useful</span></summary>
+            <div class="item"><strong>Pandas and NumPy</strong><div class="desc">Use pandas for tables and cleaning, and NumPy for numeric operations, arrays, and helper values like `np.nan`.</div><pre><code>import pandas as pd
+import numpy as np</code></pre></div>
+          </details>
+          <details>
+            <summary>Train-test and preprocessing <span class="badge teal">common</span></summary>
+            <div class="item"><strong>Model split and transformers</strong><div class="desc">These are used when you want to split data, scale numeric columns, encode categoricals, or build a preprocessing pipeline.</div><pre><code>from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, OneHotEncoder, LabelEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline</code></pre></div>
+          </details>
+          <details>
+            <summary>Metrics imports <span class="badge violet">evaluation</span></summary>
+            <div class="item"><strong>Classification and regression metrics</strong><div class="desc">These cover the most common interview and project metrics. You usually import only the ones you need for the task.</div><pre><code>from sklearn.metrics import (
+    classification_report, confusion_matrix, accuracy_score,
+    precision_score, recall_score, f1_score, roc_auc_score,
+    mean_squared_error, mean_absolute_error, r2_score,
+    silhouette_score
+)</code></pre></div>
+          </details>
+          <details>
+            <summary>Plots imports <span class="badge amber">visuals</span></summary>
+            <div class="item"><strong>Matplotlib and Seaborn</strong><div class="desc">Use matplotlib for basic plotting and seaborn for cleaner statistical plots like heatmaps, boxplots, and count plots.</div><pre><code>import matplotlib.pyplot as plt
+import seaborn as sns</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="loading" class="panel searchable">
+        <div class="card">
+          <h3>Load files</h3>
+          <p>Different interview tasks and projects start with different file types. Most of the time you will load CSV or Excel, but it helps to know the basic pattern for PDFs and JSON too.</p>
+          <details open>
+            <summary>CSV, Excel, JSON <span class="badge blue">tabular</span></summary>
+            <div class="item"><strong>CSV</strong><div class="desc">Use this for comma-separated tabular data, which is the most common format in coding rounds.</div><pre><code>df = pd.read_csv('data.csv')</code></pre></div>
+            <div class="item"><strong>Excel</strong><div class="desc">Use this when the file is `.xlsx` and sometimes when you need a specific sheet.</div><pre><code>df = pd.read_excel('data.xlsx')
+df = pd.read_excel('data.xlsx', sheet_name='Sheet1')</code></pre></div>
+            <div class="item"><strong>JSON</strong><div class="desc">Useful when records are stored as dictionaries or API-style structured data.</div><pre><code>df = pd.read_json('data.json')</code></pre></div>
+          </details>
+          <details>
+            <summary>Text and PDF basics <span class="badge teal">documents</span></summary>
+            <div class="item"><strong>Text file</strong><div class="desc">Use plain Python file reading if you need raw text for NLP or parsing.</div><pre><code>with open('notes.txt', 'r', encoding='utf-8') as f:
+    text = f.read()</code></pre></div>
+            <div class="item"><strong>PDF text extraction</strong><div class="desc">PDFs are less common in ML coding rounds, but if needed you typically extract text first and then process it.</div><pre><code>import pdfplumber
+with pdfplumber.open('report.pdf') as pdf:
+    text = ''.join(page.extract_text() or '' for page in pdf.pages)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="eda" class="panel searchable">
+        <div class="card">
+          <h3>Inspect data</h3>
+          <p>Before cleaning or modeling, inspect the DataFrame. This tells you the shape, data types, missing values, and whether your columns look usable.</p>
+          <details open>
+            <summary>Basic inspection <span class="badge blue">first step</span></summary>
+            <div class="item"><strong>Preview the data</strong><div class="desc">Use `head()` to see whether the file loaded correctly and whether column names look clean.</div><pre><code>df.head()
+df.tail()</code></pre></div>
+            <div class="item"><strong>Shape and types</strong><div class="desc">These are quick checks for size and column dtypes before you start cleaning.</div><pre><code>df.shape
+df.info()
+df.dtypes</code></pre></div>
+            <div class="item"><strong>Summary stats</strong><div class="desc">Useful for numeric columns, especially to spot strange ranges or obvious outliers.</div><pre><code>df.describe()</code></pre></div>
+            <div class="item"><strong>Missing values</strong><div class="desc">This tells you which columns need imputation or dropping.</div><pre><code>df.isnull().sum()</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="cleaning" class="panel searchable">
+        <div class="card">
+          <h3>Clean data</h3>
+          <p>This section fills the biggest gap from the old version. In practice, cleaning is not just dropping rows; you often fill, trim, cast, replace, and standardize data before modeling.</p>
+          <details open>
+            <summary>Missing value handling <span class="badge blue">important</span></summary>
+            <div class="item"><strong>Fill one numeric column with median</strong><div class="desc">Median is often safer than mean when outliers may exist, such as salary, premium, or claim amount.</div><pre><code>df['age'] = df['age'].fillna(df['age'].median())</code></pre></div>
+            <div class="item"><strong>Fill one numeric column with mean</strong><div class="desc">Use mean when the distribution is roughly balanced and not heavily skewed.</div><pre><code>df['income'] = df['income'].fillna(df['income'].mean())</code></pre></div>
+            <div class="item"><strong>Fill all numeric columns at once</strong><div class="desc">This is useful when you want a quick imputation step before building a baseline model.</div><pre><code>df.fillna(df.median(numeric_only=True), inplace=True)</code></pre></div>
+            <div class="item"><strong>Fill categorical missing values</strong><div class="desc">Use a fixed label like `Unknown` when the missing category still carries information.</div><pre><code>df['region'] = df['region'].fillna('Unknown')</code></pre></div>
+            <div class="item"><strong>Forward fill / backward fill</strong><div class="desc">These are mostly useful in time series or ordered records where nearby rows matter.</div><pre><code>df['score'] = df['score'].fillna(method='ffill')
+df['score'] = df['score'].fillna(method='bfill')</code></pre></div>
+          </details>
+          <details>
+            <summary>Dropping and deduping <span class="badge teal">cleanup</span></summary>
+            <div class="item"><strong>Drop rows with key missing values</strong><div class="desc">Use this when rows are unusable without a target or core feature.</div><pre><code>df = df.dropna(subset=['target_col'])</code></pre></div>
+            <div class="item"><strong>Drop duplicate records</strong><div class="desc">Useful when IDs should be unique but repeated rows appear in the raw data.</div><pre><code>df = df.drop_duplicates()
+df = df.drop_duplicates(subset=['customer_id'])</code></pre></div>
+          </details>
+          <details>
+            <summary>String and type cleaning <span class="badge violet">quality</span></summary>
+            <div class="item"><strong>Trim and lowercase text</strong><div class="desc">Very helpful before grouping, matching, or one-hot encoding categories.</div><pre><code>df['region'] = df['region'].str.strip().str.lower()</code></pre></div>
+            <div class="item"><strong>Replace values</strong><div class="desc">Use this to standardize inconsistent labels such as Y/N, yes/no, Male/Female, etc.</div><pre><code>df['churn'] = df['churn'].replace({'Y': 1, 'N': 0})</code></pre></div>
+            <div class="item"><strong>Change data type</strong><div class="desc">Casting is important when numbers come in as strings or dates are plain text.</div><pre><code>df['age'] = df['age'].astype(int)
+df['date'] = pd.to_datetime(df['date'])</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="features" class="panel searchable">
+        <div class="card">
+          <h3>Feature work</h3>
+          <p>Feature engineering means turning raw columns into better signals for the model. In interviews, even simple, sensible features can make your answer much stronger.</p>
+          <details open>
+            <summary>Create and transform features <span class="badge blue">engineering</span></summary>
+            <div class="item"><strong>Create a new feature</strong><div class="desc">This is one of the most common tasks in ML coding: combine raw columns into a more useful feature.</div><pre><code>df['income_per_purchase'] = df['annual_income'] / df['num_purchases']</code></pre></div>
+            <div class="item"><strong>Map values</strong><div class="desc">Convert simple categories into binary or ordinal numbers.</div><pre><code>df['gender_flag'] = df['gender'].map({'male': 1, 'female': 0})</code></pre></div>
+            <div class="item"><strong>Apply a function</strong><div class="desc">Use `apply` when a custom transformation is easier than built-in vectorized operations.</div><pre><code>df['age_bucket'] = df['age'].apply(lambda x: '30+' if x >= 30 else '<30')</code></pre></div>
+          </details>
+          <details>
+            <summary>Categorical encoding <span class="badge teal">categoricals</span></summary>
+            <div class="item"><strong>One-hot encoding with pandas</strong><div class="desc">This is the simplest and most common way to encode nominal categories in interview code.</div><pre><code>df = pd.get_dummies(df, columns=['region'], drop_first=True)</code></pre></div>
+            <div class="item"><strong>Label encoding</strong><div class="desc">This is usually used for labels or strictly ordinal categories, not arbitrary nominal features.</div><pre><code>from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+df['city_code'] = le.fit_transform(df['city'])</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="split" class="panel searchable">
+        <div class="card">
+          <h3>X, y and train-test split</h3>
+          <p>This is the core transition from data prep into modeling. `X` means predictors or features, and `y` means the target you want to predict.</p>
+          <details open>
+            <summary>Define X and y <span class="badge blue">core step</span></summary>
+            <div class="item"><strong>Common pattern</strong><div class="desc">Drop the target and ID columns from features, then keep the target column separately as `y`.</div><pre><code>X = df.drop(['target_col', 'id_col'], axis=1)
+y = df['target_col']</code></pre></div>
+            <div class="item"><strong>Alternative manual selection</strong><div class="desc">Use this when you only want a few specific columns rather than everything except the target.</div><pre><code>X = df[['age', 'income', 'num_purchases']]
+y = df['churn']</code></pre></div>
+          </details>
+          <details>
+            <summary>Split the data <span class="badge teal">evaluation</span></summary>
+            <div class="item"><strong>Train-test split</strong><div class="desc">This keeps one part of the data unseen during training so you can evaluate fairly at the end.</div><pre><code>from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)</code></pre></div>
+            <div class="item"><strong>Stratified split for classification</strong><div class="desc">Use `stratify=y` when class balance matters and you want both train and test sets to preserve label proportions.</div><pre><code>X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="preprocess" class="panel searchable">
+        <div class="card">
+          <h3>Preprocessing</h3>
+          <p>Not every model needs the same preprocessing. Tree-based models are less sensitive to scaling, while linear models, SVM, and KNN usually benefit from it.</p>
+          <details open>
+            <summary>Scaling <span class="badge blue">numeric</span></summary>
+            <div class="item"><strong>StandardScaler</strong><div class="desc">Use this when you want features centered and scaled to similar spread, especially for logistic regression, SVM, and KNN.</div><pre><code>from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)</code></pre></div>
+            <div class="item"><strong>MinMaxScaler</strong><div class="desc">Use this when you want all values scaled into a fixed range like 0 to 1.</div><pre><code>from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)</code></pre></div>
+          </details>
+          <details>
+            <summary>ColumnTransformer pipeline <span class="badge violet">cleaner production style</span></summary>
+            <div class="item"><strong>Numeric + categorical preprocessing together</strong><div class="desc">This is a cleaner pattern when you have mixed feature types and want one reproducible ML workflow.</div><pre><code>from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.impute import SimpleImputer
+
+numeric_features = ['age', 'income']
+categorical_features = ['region', 'gender']
+
+numeric_transformer = Pipeline(steps=[
+    ('imputer', SimpleImputer(strategy='median')),
+    ('scaler', StandardScaler())
+])
+
+categorical_transformer = Pipeline(steps=[
+    ('imputer', SimpleImputer(strategy='most_frequent')),
+    ('onehot', OneHotEncoder(handle_unknown='ignore'))
+])
+
+preprocessor = ColumnTransformer(transformers=[
+    ('num', numeric_transformer, numeric_features),
+    ('cat', categorical_transformer, categorical_features)
+])</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="classification" class="panel searchable">
+        <div class="card">
+          <h3>Classification models</h3>
+          <p>Use classification when the target is a category such as churn / no churn, fraud / not fraud, spam / not spam, or class A / B / C.</p>
+          <details open>
+            <summary>Common classifiers <span class="badge blue">most asked</span></summary>
+            <div class="item"><strong>Logistic Regression</strong><div class="desc">A strong baseline for binary classification because it is simple, interpretable, and fast.</div><pre><code>from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+y_prob = model.predict_proba(X_test)[:, 1]</code></pre></div>
+            <div class="item"><strong>Decision Tree</strong><div class="desc">Useful for interpretability, but it can overfit easily without depth control.</div><pre><code>from sklearn.tree import DecisionTreeClassifier
+
+model = DecisionTreeClassifier(max_depth=5, random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)</code></pre></div>
+            <div class="item"><strong>Random Forest</strong><div class="desc">Averages many trees to reduce variance and is commonly used in interviews and practical projects.</div><pre><code>from sklearn.ensemble import RandomForestClassifier
+
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+feature_importance = pd.Series(model.feature_importances_, index=X.columns)</code></pre></div>
+            <div class="item"><strong>Gradient Boosting</strong><div class="desc">Boosted trees often perform better than simple trees by correcting errors stage by stage.</div><pre><code>from sklearn.ensemble import GradientBoostingClassifier
+
+model = GradientBoostingClassifier(n_estimators=100, learning_rate=0.1)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)</code></pre></div>
+            <div class="item"><strong>KNN</strong><div class="desc">Simple distance-based classifier; usually works better after scaling.</div><pre><code>from sklearn.neighbors import KNeighborsClassifier
+
+model = KNeighborsClassifier(n_neighbors=5)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)</code></pre></div>
+            <div class="item"><strong>SVM</strong><div class="desc">Good for margin-based classification and often used in theory questions.</div><pre><code>from sklearn.svm import SVC
+
+model = SVC(kernel='rbf', probability=True, random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+y_prob = model.predict_proba(X_test)[:, 1]</code></pre></div>
+          </details>
+          <details>
+            <summary>XGBoost style note <span class="badge amber">advanced common</span></summary>
+            <div class="item"><strong>XGBoost classifier</strong><div class="desc">In many real projects people use XGBoost for tabular data. The API style is similar to sklearn, though you need the external package installed.</div><pre><code>from xgboost import XGBClassifier
+
+model = XGBClassifier(n_estimators=200, max_depth=4, learning_rate=0.05, random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="regression" class="panel searchable">
+        <div class="card">
+          <h3>Regression models</h3>
+          <p>Use regression when the target is continuous, like price, claim amount, sales, demand, or time taken.</p>
+          <details open>
+            <summary>Common regressors <span class="badge blue">most useful</span></summary>
+            <div class="item"><strong>Linear Regression</strong><div class="desc">The simplest baseline for continuous prediction.</div><pre><code>from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)</code></pre></div>
+            <div class="item"><strong>Ridge and Lasso</strong><div class="desc">These are regularized linear models; Ridge shrinks coefficients, while Lasso can push some to zero.</div><pre><code>from sklearn.linear_model import Ridge, Lasso
+
+ridge_model = Ridge(alpha=1.0)
+ridge_model.fit(X_train, y_train)
+
+lasso_model = Lasso(alpha=0.1)
+lasso_model.fit(X_train, y_train)</code></pre></div>
+            <div class="item"><strong>Random Forest Regressor</strong><div class="desc">A tree ensemble for continuous targets when linear assumptions may be too weak.</div><pre><code>from sklearn.ensemble import RandomForestRegressor
+
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="clustering" class="panel searchable">
+        <div class="card">
+          <h3>Clustering</h3>
+          <p>Clustering is unsupervised learning, so there is no target label `y`. You group observations by similarity instead of predicting a known answer.</p>
+          <details open>
+            <summary>Basic K-Means <span class="badge teal">unsupervised</span></summary>
+            <div class="item"><strong>K-Means</strong><div class="desc">Use when you want to split data into K groups based on feature similarity.</div><pre><code>from sklearn.cluster import KMeans
+
+model = KMeans(n_clusters=3, random_state=42)
+model.fit(X)
+df['cluster'] = model.predict(X)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="timeseries" class="panel searchable">
+        <div class="card">
+          <h3>Time series basics</h3>
+          <p>Time series work is its own field, but there are a few basic patterns worth keeping in your reference sheet.</p>
+          <details open>
+            <summary>Simple setup <span class="badge blue">starter</span></summary>
+            <div class="item"><strong>Sort by date and create lag</strong><div class="desc">Lag features and rolling features are common starting points in forecasting tasks.</div><pre><code>df['date'] = pd.to_datetime(df['date'])
+df = df.sort_values('date')
+df['sales_lag_1'] = df['sales'].shift(1)
+df['sales_roll_7'] = df['sales'].rolling(7).mean()</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="glm" class="panel searchable">
+        <div class="card">
+          <h3>Statsmodels</h3>
+          <p>Use statsmodels when you care about coefficient interpretation, p-values, and statistical summaries. This is especially useful in interview discussion for GLM-style business modeling.</p>
+          <details open>
+            <summary>OLS and Logit <span class="badge violet">interpretable</span></summary>
+            <div class="item"><strong>OLS</strong><div class="desc">Ordinary least squares is the classic statistical linear regression with full summary output.</div><pre><code>import statsmodels.api as sm
+
+X = df[['age', 'income', 'num_purchases']]
+y = df['sales']
+X = sm.add_constant(X)
+model = sm.OLS(y, X).fit()
+print(model.summary())</code></pre></div>
+            <div class="item"><strong>Logit</strong><div class="desc">Use this for binary outcomes when you want interpretable coefficients and significance tests.</div><pre><code>X = df[['age', 'income', 'num_purchases']]
+y = df['churn']
+X = sm.add_constant(X)
+model = sm.Logit(y, X).fit()
+print(model.summary())</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="predictions" class="panel searchable">
+        <div class="card">
+          <h3>Predictions</h3>
+          <p>After the model is trained, you usually want one of two things: predicted labels or predicted probabilities. Regression models instead return continuous values.</p>
+          <details open>
+            <summary>Prediction patterns <span class="badge blue">output</span></summary>
+            <div class="item"><strong>Classification labels</strong><div class="desc">Use this when you want the final predicted class such as churn or non-churn.</div><pre><code>y_pred = model.predict(X_test)</code></pre></div>
+            <div class="item"><strong>Classification probabilities</strong><div class="desc">Use this for AUC, threshold tuning, ranking customers by risk, or business prioritization.</div><pre><code>y_prob = model.predict_proba(X_test)[:, 1]</code></pre></div>
+            <div class="item"><strong>Regression predictions</strong><div class="desc">Regression returns continuous values such as price, sales, or claim amount.</div><pre><code>y_pred = model.predict(X_test)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="metrics" class="panel searchable">
+        <div class="card">
+          <h3>Metrics</h3>
+          <p>This section is organized by task, because the correct metric depends on whether you are doing classification, regression, or clustering. Choosing the wrong metric can make a good model look bad or a bad model look good.</p>
+          <details open>
+            <summary>Classification metrics <span class="badge blue">labels</span></summary>
+            <div class="item"><strong>Classification report</strong><div class="desc">Prints precision, recall, F1-score, and support together, so it is one of the fastest useful summaries in interviews.</div><pre><code>from sklearn.metrics import classification_report
+print(classification_report(y_test, y_pred))</code></pre></div>
+            <div class="item"><strong>Accuracy</strong><div class="desc">Simple percentage of correct predictions. Fine for balanced classes, but misleading in imbalanced problems.</div><pre><code>from sklearn.metrics import accuracy_score
+accuracy_score(y_test, y_pred)</code></pre></div>
+            <div class="item"><strong>Precision</strong><div class="desc">Of all predicted positives, how many were actually positive. Useful when false positives are costly.</div><pre><code>from sklearn.metrics import precision_score
+precision_score(y_test, y_pred)</code></pre></div>
+            <div class="item"><strong>Recall</strong><div class="desc">Of all actual positives, how many did the model catch. Useful when missing positives is costly.</div><pre><code>from sklearn.metrics import recall_score
+recall_score(y_test, y_pred)</code></pre></div>
+            <div class="item"><strong>F1-score</strong><div class="desc">Balances precision and recall and is helpful when you want one summary metric.</div><pre><code>from sklearn.metrics import f1_score
+f1_score(y_test, y_pred)</code></pre></div>
+            <div class="item"><strong>ROC-AUC</strong><div class="desc">Measures ranking quality using predicted probabilities across thresholds.</div><pre><code>from sklearn.metrics import roc_auc_score
+roc_auc_score(y_test, y_prob)</code></pre></div>
+            <div class="item"><strong>Confusion matrix</strong><div class="desc">Shows TP, TN, FP, and FN counts, which helps explain errors clearly.</div><pre><code>from sklearn.metrics import confusion_matrix
+confusion_matrix(y_test, y_pred)</code></pre></div>
+          </details>
+          <details>
+            <summary>Regression metrics <span class="badge teal">continuous</span></summary>
+            <div class="item"><strong>MAE</strong><div class="desc">Mean absolute error is simple to explain because it is the average absolute miss.</div><pre><code>from sklearn.metrics import mean_absolute_error
+mean_absolute_error(y_test, y_pred)</code></pre></div>
+            <div class="item"><strong>MSE</strong><div class="desc">Penalizes larger errors more strongly because errors are squared.</div><pre><code>from sklearn.metrics import mean_squared_error
+mean_squared_error(y_test, y_pred)</code></pre></div>
+            <div class="item"><strong>RMSE</strong><div class="desc">Square root of MSE, which puts the error back into the same units as the target.</div><pre><code>mean_squared_error(y_test, y_pred, squared=False)</code></pre></div>
+            <div class="item"><strong>R²</strong><div class="desc">Measures how much variance in the target is explained by the model.</div><pre><code>from sklearn.metrics import r2_score
+r2_score(y_test, y_pred)</code></pre></div>
+          </details>
+          <details>
+            <summary>Clustering metric <span class="badge violet">unsupervised</span></summary>
+            <div class="item"><strong>Silhouette score</strong><div class="desc">Measures how well points fit their own cluster compared with nearby clusters.</div><pre><code>from sklearn.metrics import silhouette_score
+silhouette_score(X, df['cluster'])</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="tuning" class="panel searchable">
+        <div class="card">
+          <h3>Validation and tuning</h3>
+          <p>These tools help you estimate model quality more reliably and tune hyperparameters without touching the final test set too early.</p>
+          <details open>
+            <summary>Cross-validation and grid search <span class="badge blue">robust</span></summary>
+            <div class="item"><strong>Cross-validation</strong><div class="desc">Use this when one train-test split feels too fragile or when the dataset is not huge.</div><pre><code>from sklearn.model_selection import cross_val_score
+scores = cross_val_score(model, X, y, cv=5, scoring='roc_auc')
+scores.mean()</code></pre></div>
+            <div class="item"><strong>GridSearchCV</strong><div class="desc">Use this when you want sklearn to try multiple hyperparameter combinations and pick the best one.</div><pre><code>from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+
+params = {
+    'n_estimators': [50, 100],
+    'max_depth': [3, 5, None]
+}
+
+grid = GridSearchCV(RandomForestClassifier(random_state=42), params, cv=5, scoring='roc_auc')
+grid.fit(X_train, y_train)
+print(grid.best_params_)
+print(grid.best_score_)</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="plots" class="panel searchable">
+        <div class="card">
+          <h3>Plots</h3>
+          <p>Plots are often needed for EDA, model interpretation, or communicating results in notebooks. These are the patterns you will use most often.</p>
+          <details open>
+            <summary>EDA plots <span class="badge blue">common</span></summary>
+            <div class="item"><strong>Histogram</strong><div class="desc">Use for the distribution of one variable like age, salary, or claim amount.</div><pre><code>plt.hist(df['age'], bins=20, edgecolor='black')
+plt.title('Age Distribution')
+plt.show()</code></pre></div>
+            <div class="item"><strong>Box plot</strong><div class="desc">Useful for spread and outlier checks across categories.</div><pre><code>sns.boxplot(x='region', y='salary', data=df)
+plt.show()</code></pre></div>
+            <div class="item"><strong>Count plot</strong><div class="desc">Use this for class balance or simple category frequency checks.</div><pre><code>sns.countplot(x='churn', data=df)
+plt.show()</code></pre></div>
+            <div class="item"><strong>Correlation heatmap</strong><div class="desc">Very common in DS notebooks for checking linear relationships among numeric features.</div><pre><code>sns.heatmap(df.corr(numeric_only=True), annot=True, cmap='coolwarm')
+plt.show()</code></pre></div>
+          </details>
+        </div>
+      </section>
+
+      <section id="templates" class="panel searchable">
+        <div class="card">
+          <h3>End-to-end templates</h3>
+          <p>These are the most practical sections in the whole resource. Copy one, change the column names, and adapt the model for the task in front of you.</p>
+          <details open>
+            <summary>Baseline classification template <span class="badge blue">copy this</span></summary>
+            <div class="item"><strong>CSV to classification metrics</strong><div class="desc">This is a strong default pattern for churn, fraud, default, and many interview-style business classification tasks.</div><pre><code>import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, roc_auc_score
+
+# load
+df = pd.read_csv('data.csv')
+
+# clean
+df['age'] = df['age'].fillna(df['age'].median())
+df['income'] = df['income'].fillna(df['income'].median())
+df = pd.get_dummies(df, columns=['region'], drop_first=True)
+
+# features and target
+X = df.drop(['target_col', 'id_col'], axis=1)
+y = df['target_col']
+
+# split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+# scale
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# model
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+
+# predict
+y_pred = model.predict(X_test)
+y_prob = model.predict_proba(X_test)[:, 1]
+
+# evaluate
+print(classification_report(y_test, y_pred))
+print('ROC-AUC:', roc_auc_score(y_test, y_prob))</code></pre></div>
+          </details>
+          <details>
+            <summary>Baseline regression template <span class="badge teal">copy this too</span></summary>
+            <div class="item"><strong>CSV to regression metrics</strong><div class="desc">This is the standard workflow for sales, price, demand, or amount prediction tasks.</div><pre><code>import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# load
+df = pd.read_csv('data.csv')
+
+# clean
+df.fillna(df.median(numeric_only=True), inplace=True)
+df = pd.get_dummies(df, columns=['region'], drop_first=True)
+
+# features and target
+X = df.drop(['target_col', 'id_col'], axis=1)
+y = df['target_col']
+
+# split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# predict
+y_pred = model.predict(X_test)
+
+# evaluate
+print('R2:', r2_score(y_test, y_pred))
+print('RMSE:', mean_squared_error(y_test, y_pred, squared=False))</code></pre></div>
+          </details>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.nav-btn');
+    const panels = document.querySelectorAll('.panel');
+    const search = document.getElementById('search');
+
+    function showPanel(id) {
+      panels.forEach(p => p.classList.toggle('active', p.id === id));
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    buttons.forEach(btn => btn.addEventListener('click', () => showPanel(btn.dataset.target)));
+
+    search.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) {
+        document.querySelectorAll('.searchable details, .searchable .item').forEach(el => el.style.display = '');
+        return;
+      }
+      document.querySelectorAll('.searchable details').forEach(detail => {
+        let matched = false;
+        detail.querySelectorAll('.item').forEach(item => {
+          const text = item.innerText.toLowerCase();
+          const ok = text.includes(q);
+          item.style.display = ok ? '' : 'none';
+          if (ok) matched = true;
+        });
+        detail.style.display = matched ? '' : 'none';
+        if (matched) detail.open = true;
+      });
+    });
+  </script>
+</body>
+</html>
